@@ -62,7 +62,8 @@ class MattiashellPlayer extends Player
 
     public function isOpponentAFullBatard(string $name)
     {
-        if (in_array($name, $this->list_player)) {
+        return false;
+        /*if (in_array($name, $this->list_player)) {
             $github_name = $this->list_player[$name];
             $batard = false;
             $url = "https://github.com/{$github_name}/fluffy-waddle/blob/master/src/Game/PlayerIA/{$github_name}Player.php";
@@ -74,6 +75,7 @@ class MattiashellPlayer extends Player
                 $batard = true;
             return $batard;
         }
+        */
     }
 
     public function getChoice()
@@ -92,6 +94,8 @@ class MattiashellPlayer extends Player
         //Pas de negociation avec les lâches
         if ($this->isOpponentAFullBatard($opponent_name))
             return parent::foeChoice();
+
+
 
         $opponent_last = $this->result->getLastChoiceFor($this->opponentSide);
         if ($opponent_last === "foe")
