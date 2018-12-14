@@ -22,8 +22,9 @@ class MattiashellPlayer extends Player
         $max_turn = 10;
         $round_number = $this->result->getNbRound();
         $opponent_name = $this->result->getStatsFor($this->opponentSide)['name'];
+        $T9_gang = array("Vcollette", "Santost", "Paultato");
         if ($round_number === 9) {
-            if ($opponent_name === "Vcollette")
+            if (in_array($opponent_name, $T9_gang))
                 return parent::friendChoice();
             return parent::foeChoice();
         }
@@ -31,7 +32,7 @@ class MattiashellPlayer extends Player
         $opponent_last = $this->result->getLastChoiceFor($this->opponentSide);
         if ($opponent_last === "foe")
             $this->state_of_mind = 1;
-        if ($this->state_of_mind === 0) {
+        if ($this->state_of_mind === 0 or $this->number_of_mad_turn > $max_turn / 5) {
             $this->number_of_mad_turn = 0;
             return parent::friendChoice();
         }
@@ -40,7 +41,7 @@ class MattiashellPlayer extends Player
             $this->number_of_mad_turn = 0;
             return parent::friendChoice();
         }
-        
+
         return parent::foeChoice();
     }
 }
