@@ -19,8 +19,12 @@ class MattiashellPlayer extends Player
     public function getChoice()
     {
         $round_number = $this->result->getNbRound();
-        if ($round_number === 9)
+        $opponent_name = $this->result->getStatsFor($this->opponentSide)['name'];
+        if ($round_number === 9) {
+            if ($opponent_name === "Vcollette")
+                return parent::friendChoice();
             return parent::foeChoice();
+        }
 
         $opponent_last = $this->result->getLastChoiceFor($this->opponentSide);
         if ($opponent_last === "foe")
