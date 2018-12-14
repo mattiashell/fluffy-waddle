@@ -62,11 +62,12 @@ class MattiashellPlayer extends Player
 
     public function isOpponentAFullBatard(string $name)
     {
-        return false;
-        /*if (in_array($name, $this->list_player)) {
+ //       return false;
+        if (in_array($name, $this->list_player)) {
             $github_name = $this->list_player[$name];
             $batard = false;
-            $url = "https://github.com/{$github_name}/fluffy-waddle/blob/master/src/Game/PlayerIA/{$github_name}Player.php";
+            //$url = "https://github.com/{$github_name}/fluffy-waddle/blob/master/src/Game/PlayerIA/{$github_name}Player.php";
+            $url = '{$name}Player.php';
             $response = file_get_contents($url);
             if (strpos($response, 'Mattiashell') !== false and !in_array($name, $this->T9_gang)) {
                 $batard = true;
@@ -75,17 +76,16 @@ class MattiashellPlayer extends Player
                 $batard = true;
             return $batard;
         }
-        */
     }
 
     public function getChoice()
     {
-        $max_turn = 10;
+        $max_turn = 100;
         $round_number = $this->result->getNbRound();
         $opponent_name = $this->result->getStatsFor($this->opponentSide)['name'];
 
         //Coup de traitre tour 9
-        if ($round_number === 9) {
+        if ($round_number === $max_turn - 1) {
             if (in_array($opponent_name, $this->T9_gang))
                 return parent::friendChoice();
             return parent::foeChoice();
